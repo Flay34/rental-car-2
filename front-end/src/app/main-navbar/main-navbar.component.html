@@ -8,6 +8,9 @@
             <li><a routerLink="/">Accueil</a></li>
             <li><a routerLink="/about-section">À propos</a></li>
             <li><a routerLink="/contact-section">Contact</a></li>
+            <li><a routerLink="/client-section">Réservations</a></li>
+            <li><a routerLink="/gantt-chart">Tableau de bord</a></li>
+
              
         </ul>
         
@@ -15,11 +18,14 @@
             <!-- <a href="" class="btn"> Deconnexion →</a>
              -->
 
-             <ng-container *ngIf="auth.isAuthenticated$ | async;">
+             <ng-container *ngIf="auth.isAuthenticated$ | async; else elseBlock">
                 <button class="btn" (click)="auth.logout({ returnTo: document.location.origin })">
                     Deconnexion &#8594;
                 </button>
-              </ng-container>
+            </ng-container>
+            <ng-template #elseBlock>
+               <button class="btn" (click)="login()">Connexion</button>>
+            </ng-template>
         </li>  
     </div>
     

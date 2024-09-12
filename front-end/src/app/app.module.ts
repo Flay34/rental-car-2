@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import { CarsComponent } from './cars/cars.component';
@@ -14,14 +15,28 @@ import { AppRoutingModule } from './app-routing.module';
 import { AboutSectionComponent } from './about-section/about-section.component';
 import { ContactSectionComponent } from './contact-section/contact-section.component';
 import { Routes } from '@angular/router';
-
-const appRoutes : Routes = [
-  {path: '', component: HeroSectionComponent},
-  {path: 'about-section', component: AboutSectionComponent},
-  {path: 'contact-section', component: ContactSectionComponent}
-];
+import { HomePageComponent } from './home-page/home-page.component';
 
 
+import { AdminSectionComponent } from './admin-section/admin-section.component';
+import { ClientSectionComponent } from './client-section/client-section.component';
+import { GanttChartComponent } from './gantt-chart/gantt-chart.component';
+
+import { CarReservationComponent } from './car-reservation/car-reservation.component';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button'
+import {MatCardModule} from '@angular/material/card'
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDialogModule} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';      
+import {MatNativeDateModule} from '@angular/material/core';
+import { ReservationDialogComponent } from './reservation-dialog/reservation-dialog.component';
+import { SuccessComponent } from './success/success.component';
+import { CancelledComponent } from './cancelled/cancelled.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +48,17 @@ const appRoutes : Routes = [
     AllCarsSectionComponent,
     AuthButtonComponent,
     AboutSectionComponent,
-    ContactSectionComponent
+    ContactSectionComponent,
+    HomePageComponent,
+    CarReservationComponent,
+    AdminSectionComponent,
+    ClientSectionComponent,
+    GanttChartComponent,
+    ReservationDialogComponent,
+    SuccessComponent,
+    CancelledComponent,
+  
+
   ],
   imports: [
     BrowserModule,
@@ -45,6 +70,18 @@ const appRoutes : Routes = [
       clientId: 'AScAPG8JPk5QWpQQlCfD1HRcy6Vz88gx'
     }),
      AppRoutingModule,
+     BrowserAnimationsModule,
+     BrowserAnimationsModule,
+     FormsModule,
+     ReactiveFormsModule,
+     MatButtonModule,
+     MatCardModule,
+     MatDatepickerModule,
+     MatDialogModule,
+     MatFormFieldModule,
+     MatNativeDateModule,
+     HttpClientModule
+     
   ],
   providers: [HeroSectionComponent],
   bootstrap: [AppComponent]

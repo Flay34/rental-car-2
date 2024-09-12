@@ -1,0 +1,39 @@
+
+<div class="full-page">
+
+    <div class="center-page">
+        <mat-card>
+            <mat-card-title>Please choose a reservation date</mat-card-title>
+             <mat-card-content align="center">
+                 <mat-form-field appearance="fill">
+                     <mat-label>Enter a date range</mat-label>
+                     <mat-date-range-input [rangePicker]="picker">
+                     <input matStartDate placeholder="Start date"
+                        [(ngModel)]="start"
+                         (dateChange)="dateParser('change', $event, parsedStart)"
+                     >
+                     
+                     <input matEndDate placeholder="End date"
+                     [(ngModel)]="end"
+                     (dateChange)="dateParser('change', $event, parsedEnd)"
+                     >
+                     </mat-date-range-input>
+
+                     <!-- <mat-hint align="center">MM/DD/YYYY – MM/DD/YYYY</mat-hint> -->
+                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                     <mat-date-range-picker #picker></mat-date-range-picker>
+                    </mat-form-field>
+         
+             </mat-card-content>
+             <mat-card-content align="center">
+                 <button mat-raised-button color="primary" (click)="openDialog()" >Confirm</button>
+             </mat-card-content>
+        </mat-card>
+        
+        <hr>
+    </div>
+
+ 
+
+</div>
+

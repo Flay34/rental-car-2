@@ -1,18 +1,18 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, Observer, throwError } from 'rxjs';
 import { catchError, retry, map } from 'rxjs/operators';
-
-
+import { ErrorHandler } from "@angular/core";
 import { Injectable } from "@angular/core";
 import { Car } from "../../models/cars";
-import { CarsComponent } from "../../cars/cars.component";
+import { Reservation } from "src/app/models/reservations";
+
 @Injectable({
     providedIn:"root",
 })
 
 export class HttpService {
     // LESS OP: Review Constructor Role in Angular classes/TypeScript
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private handleError: ErrorHandler) {
 
 
     }
@@ -25,71 +25,59 @@ export class HttpService {
     justAndId: string = '632b617ce9b09da6f0540d5d';
 
     //GET ALL CARS
-    fetchAllCars() {return this.http.get<{[key:string]: Car}>(this.backEndUrl)}
+    fetchAllCars() {return this.http.get<Car[]>(this.backEndUrl)}
         
         // GET 1 CAR
-        fetchOneCar(){
+     fetchOneCar(){
             return this.http.get<Car>(this.backEndUrl + this.justAndId)
-        } 
+         } 
+
+    fetchReservations(){
+    }
+
+
+    createReservation(reservation: Reservation) {
+        const httpOptions = {
+            headers: new HttpHeaders()
+      }
+  
+      httpOptions.headers.append('Access-Control-Allow-Origin', '*');
+      httpOptions.headers.append('Content-Type', 'application/json');
+      httpOptions.headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+
+      
+        return this.http.post<Reservation>(this.backEndUrl + `reservation`, reservation, httpOptions)
+            .pipe(
+                catchError(
+                    err => {
+                        console.log(err)
+                        throw 'error in POST RES. Details:' + err
+                    }
+                )
+            )
     
+    }
 
-        //  fetchingCar(): Observable<object> {
-        //      let possibleCar: Car | any;
-        //      let placeHolderValue: any;
-        //      new Observable((observer) => {
-        //         possibleCar =   this.http.get<Car>(this.backEndUrl + this.justAndId)
-        //        if(possibleCar) {
-        //          placeHolderValue = observer.next(possibleCar);
-        //          return placeHolderValue
-        //        }
-        //        else {
-        //         placeHolderValue = observer.error("There's currently no car")
-        //        }
-        //     })
-            
-        //     return placeHolderValue
-        //  }
 
-        // fetchCar = new Observable((observer) => {
-        //    let possibleCar
-        //    let car: Car;
-        //    possibleCar =  this.http.get<Car>(this.backEndUrl + this.justAndId)
-           
-        //    if(possibleCar && typeof possibleCar === typeof car ){
-        //         observer.next(possibleCar)
-        //    }
-        //    else {
-        //     console.log( observer.error(Error))
-        //    }
-            
-        // })
+    checkoutSession(car_price, car_name) {
 
-        //  fetchOneCar(){
-        //     this.fetchCar.subscribe({
-        //         next(possibleCar) {
-        //             console.log(possibleCar)
-        //         }
-        //     })
-           
-        //  }
+      let  requiredInfo = {
+        price: car_price,
+        name: car_name,
+        quantity: 1
 
-        
-        // //GET 1 CAR
-        //  fetchOneCar(id: string, componentCar: any| Car): any {
-        //     new Observable((observer) => {
-        //         let returnCar: any | Car;
-        //       returnCar =  this.http.get<Car>(this.backEndUrl + id)
-        //         .subscribe({
-        //             next(returnCar) {
-        //                 console.log(returnCar)
-        //                 componentCar = returnCar
-        //             },
-        //             error(msg){
-        //                 console.log(msg)
-        //             }
-        //         })
-        //         return componentCar
-        //     })
-        // }
+        }
+    
+        return this.http.post(this.backEndUrl + `create-checkout-session`, requiredInfo)
+        .pipe(
+            catchError(
+                err => {
+                    console.log(err)
+                    throw 'error in POST RES. Details:' + err
+                }
+            )
+        )
 
     }
+
+}
